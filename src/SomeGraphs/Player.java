@@ -6,19 +6,17 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 
-import java.util.LinkedList;
-
 import javax.swing.ImageIcon;
 
 public class Player extends Object implements Shooter{
 	private static final int HorizontalV=15;
 	private static final int Max_Health=600;
 	private static final int VerticalV = 10;
-	private static Image[] imgC_L_R= {new ImageIcon("src/res/Player/Battlecruiser.png").getImage(),
+	static Image[] imgC_L_R= {new ImageIcon("src/res/Player/Battlecruiser.png").getImage(),
 			new ImageIcon("src/res/Player/BattlecruiserL.png").getImage(),
 			new ImageIcon("src/res/Player/BattlecruiserR.png").getImage()};
-	private static Image[] imgObj= {new ImageIcon("src/res/Player/Battlecruiser.png").getImage()};
-	private static Image[] imgBulletDeath = { new ImageIcon("src/res/Explosion/exp1.gif").getImage(), 
+	static Image[] imgObj= {new ImageIcon("src/res/Player/Battlecruiser.png").getImage()};
+	static Image[] imgBulletDeath = { new ImageIcon("src/res/Explosion/exp1.gif").getImage(), 
 											new ImageIcon("src/res/Explosion/exp2.gif").getImage(),
 											new ImageIcon("src/res/Explosion/exp3.gif").getImage(),
 											new ImageIcon("src/res/Explosion/exp4.gif").getImage(),
@@ -33,27 +31,30 @@ public class Player extends Object implements Shooter{
 											new ImageIcon("src/res/Explosion/exp13.gif").getImage(),
 											new ImageIcon("src/res/Explosion/exp14.gif").getImage(),
 											new ImageIcon("src/res/Explosion/exp15.gif").getImage()};
-	private Image imgShip;
-	private static Image[] imgBullet= {new ImageIcon("src/res/Player/Bullet.png").getImage()};
-	private int reloadTime;
-  	
-	private boolean keyLeft;
-	private boolean keyRight;
-	private boolean keyTop;
-	private boolean keyBottom;
+	Image imgShip;
+	static Image[] imgBullet= {new ImageIcon("src/res/Player/Bullet.png").getImage()};
+	int s;
+	int reloadTime;
 	
-	private boolean fire=false;
+	int v=5;
 	
-	public Player() {    
+	boolean keyLeft;
+	boolean keyRight;
+	boolean keyTop;
+	boolean keyBottom;
+	
+	boolean fire=false;
+	
+	public Player() {
 		super("Player", imgObj,null);
-		this.x=500;   
+		this.x=500;
 		this.y=600;
 		this.health=Max_Health;
 		this.imgShip= imgC_L_R[0];
 		this.enemy=false;
 	}
-	@Override
-	public void move(){
+		public void move(){
+		
 		if (keyLeft){vx=-HorizontalV;imgShip=imgC_L_R[1];}
 		else if (keyRight){vx=HorizontalV;imgShip=imgC_L_R[2];}
 		else {vx=0;imgShip=imgC_L_R[0];}
@@ -112,23 +113,22 @@ public class Player extends Object implements Shooter{
 			keyBottom=false;
 		}
 	}
-	public int action(LinkedList<Object> objectBase){
-		if (fire==true)shoot(objectBase);
-		return 0;
+	void action(Space s){
+		if (fire==true)shoot(s);
 	}
 	@Override
-	public void shoot(LinkedList<Object> objectBase){
+	public void shoot(Space s){
 		if (reloadTime!=0){
 			reloadTime--;
 		}
 		if (reloadTime==0&&fire==true){
-			objectBase.add(1, new Bullet(x+imgShip.getWidth(null)/2-8, y-35, imgBullet,imgBulletDeath, -10,25,false));
+			s.objectBase.add(1, new Bullet(x+imgShip.getWidth(null)/2-8, y-35, imgBullet,imgBulletDeath, -10,25,false));
 			reloadTime=10;
 		}
 	}
-	@Override
 	public void draw(Graphics g){
 		g.drawImage(imgShip, x, y, null);
+		drawScore(g);
 		drawHealthLine(g);
 	}
 			public void drawHealthLine(Graphics g) {
@@ -149,5 +149,8 @@ public class Player extends Object implements Shooter{
 					if(i==rect){healthcolor=Color.lightGray;}
 				}
 			}
-		
+			public void drawScore(Graphics g) {
+				g.setColor(Color.white);
+				g.drawString("Score: "+s, 1200, 700);
+			}
 }
