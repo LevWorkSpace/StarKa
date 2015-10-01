@@ -3,8 +3,9 @@ package SomeGraphs;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-public class Object {
+public abstract class Object {
 	int health;
 	int x;
 	int y;
@@ -50,21 +51,21 @@ public class Object {
 			}
 		}	
 	}
-	void move(){
+	public void move(){
 		y+=vy;
 		x+=vx;
 	}
-	void stop(){
+	public void stop(){
 		vx=0;
 		vy=0;
 	}
-	void damaged(int damage){
+	public void damaged(int damage){
 		if(health!=0){
 			health-=damage;
 			if (health<=0){die();}
 		}
 	}
-	void die(){
+	public void die(){
 		health=0;
 		img.clear();
 		animate=0;
@@ -81,7 +82,8 @@ public class Object {
 			animate++;
 		}else{health=-1;}
 	}
-	boolean testContact(Object obj){
+	public abstract int action(LinkedList<Object> objectBase);	
+	public boolean testContact(Object obj){
 		double l=Math.sqrt(Math.pow(x-obj.x, 2)+Math.pow(y-obj.y, 2));
 		if(l<=size/2+obj.size/2){
 			return true;
