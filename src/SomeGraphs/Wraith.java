@@ -26,8 +26,13 @@ public class Wraith extends Object implements Shooter{
 	private static Image[] imgObj2=	{ new ImageIcon("src/res/Wraith/16.png").getImage()};
 	private static final int maxReload=50;
 	private int reloadTime=maxReload;
+<<<<<<< HEAD
 	private int sign=1;
 	private Player player;
+=======
+	private boolean active=false;
+	private int sign=1;
+>>>>>>> origin/master
 	public Wraith(Space s) {
 		super("Wraith", imgObj, imgDeath);
 		Random rand = new Random();
@@ -51,6 +56,7 @@ public class Wraith extends Object implements Shooter{
 			reloadTime=maxReload;
 		}
 	}
+<<<<<<< HEAD
 	public void move(){
 		if (player!=null){		
 			vx+=sign*2;
@@ -58,15 +64,31 @@ public class Wraith extends Object implements Shooter{
 			if (vx==50||vx==-50)sign*=(-1);
 			x=vx+player.x+player.size/2;
 			y=vy+player.y+player.size/2;
+=======
+	public void move(Player p){
+		if (active==true){		
+			vx+=sign*2;
+			vy=sign*(int) Math.sqrt(2500-vx*vx);
+			if (vx==50||vx==-50)sign*=(-1);
+			x=vx+p.x+p.size/2;
+			y=vy+p.y+p.size/2;
+>>>>>>> origin/master
 		}else{
 			x+=vx;
 			y+=vy;
 		}
 	}
 	public int action(LinkedList<Object> objectBase){
+<<<<<<< HEAD
 		if(player==null){
 			if (this.testContact(objectBase.get(0))){
 				player=(Player) objectBase.get(0);
+=======
+		if(active==false){
+			Object a=objectBase.get(0);
+			if (this.testContact(a)){
+				active=true;
+>>>>>>> origin/master
 				img.clear();
 				img.add(imgObj2[0]);
 				return this.expa;

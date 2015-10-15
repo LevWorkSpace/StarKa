@@ -81,14 +81,25 @@ public class Space extends JPanel implements ActionListener,Runnable{
 		}
 		
 		for(int i=0;i<objectBase.size();i++){	
+<<<<<<< HEAD
 			objectBase.get(i).move();
+=======
+			Object obj=objectBase.get(i);
+			if(obj.name.equals("Wraith")){
+				((Wraith)obj).move(player1);
+			}else{obj.move();}
+>>>>>>> origin/master
 		}
 	}
 	public void action(){
 		for(int i=0;i<objectBase.size();i++){	
 			Object obj=objectBase.get(i);
 			score+=obj.action(objectBase);
+<<<<<<< HEAD
 			if (obj.isDead()||obj.y>1800||obj.y<-60){
+=======
+			if (obj.y>1800||obj.y<-60||obj.health<0){
+>>>>>>> origin/master
 				objectBase.remove(i);
 			}
 			

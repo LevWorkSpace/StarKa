@@ -14,7 +14,10 @@ public class Player extends Object implements Shooter{
 	private static final int HorizontalV=15;
 	private static final int Max_Health=600;
 	private static final int VerticalV = 10;
+<<<<<<< HEAD
 	private static final int acceleration = 2;
+=======
+>>>>>>> origin/master
 	private static Image[] imgC_L_R= {new ImageIcon("src/res/Player/Battlecruiser.png").getImage(),
 			new ImageIcon("src/res/Player/BattlecruiserL.png").getImage(),
 			new ImageIcon("src/res/Player/BattlecruiserR.png").getImage()};
@@ -45,7 +48,10 @@ public class Player extends Object implements Shooter{
 	
 	private boolean fire=false;
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> origin/master
 	public Player() {    
 		super("Player", imgObj,null);
 		this.x=500;   
@@ -56,6 +62,7 @@ public class Player extends Object implements Shooter{
 	}
 	@Override
 	public void move(){
+<<<<<<< HEAD
 		if (keyLeft){
 			vx-=acceleration;
 			if (vx<-HorizontalV){
@@ -72,6 +79,11 @@ public class Player extends Object implements Shooter{
 			if(vx!=0)vx+=-vx*acceleration/Math.abs(vx);
 			imgShip=imgC_L_R[0];
 		}
+=======
+		if (keyLeft){vx=-HorizontalV;imgShip=imgC_L_R[1];}
+		else if (keyRight){vx=HorizontalV;imgShip=imgC_L_R[2];}
+		else {vx=0;imgShip=imgC_L_R[0];}
+>>>>>>> origin/master
 		
 		if (keyTop){
 			vy-=acceleration;
