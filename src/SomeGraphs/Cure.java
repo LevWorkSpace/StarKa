@@ -1,13 +1,13 @@
 package SomeGraphs;
 
 import java.awt.Image;
+import java.util.LinkedList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
 
 public class Cure extends Object{
-	static Image[] imgCure = {new ImageIcon("src/res/Explosion/exp2.gif").getImage()};
-	Image img=imgCure[0];
+	private static Image[] imgCure = {new ImageIcon("src/res/Explosion/exp2.gif").getImage()};
 	public Cure(Space s) {
 		super("Cure", imgCure, null);
 		Random rand = new Random();
@@ -18,14 +18,16 @@ public class Cure extends Object{
 		health=50;
 		invize=true;
 	}
-	void action(Space s) {
-		for (int i=0;i<s.objectBase.size();i++){
-			Object obj=s.objectBase.get(i);
-			if (obj.name.equals("Player")&&this.testContact(obj)&&health>0){
+	public int action(LinkedList<Object> objectBase) {
+		for (int i=0;i<objectBase.size();i++){
+			Object obj=objectBase.get(i);
+			if (!obj.enemy&&this.testContact(obj)&&health>0){
 				obj.damaged(-health);
-				s.player1.s+=health;
 				die();
+				return health;
+				
 			}
 		}
+		return 0;
 	}
 }
